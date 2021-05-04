@@ -14,7 +14,7 @@ const App = () => {
         screenOptions={{
           headerShown: false,
         }}
-        initialRouteName={"MainApp"}
+        initialRouteName={"Testing"}
       >
         <Stack.Screen name="MainApp" component={BottomTabNav} />
       </Stack.Navigator>
