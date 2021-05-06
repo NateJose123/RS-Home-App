@@ -8,7 +8,7 @@ import {
   Oswald_400Regular,
 } from "@expo-google-fonts/oswald";
 import { useFonts as useLato, Lato_400Regular } from "@expo-google-fonts/lato";
-
+import { useFonts as useJost, Jost_400Regular } from "@expo-google-fonts/jost";
 import { theme } from "./src/infrastructure/theme";
 import { Navigation } from "./src/infrastructure/navigation";
 
@@ -32,11 +32,15 @@ export default function App() {
     Oswald_400Regular,
   });
 
+  const [jostLoaded] = useJost({
+    Jost_400Regular,
+  });
+
   const [latoLoaded] = useLato({
     Lato_400Regular,
   });
 
-  if (!oswaldLoaded || !latoLoaded) {
+  if (!oswaldLoaded || !latoLoaded || !jostLoaded) {
     return null;
   }
 

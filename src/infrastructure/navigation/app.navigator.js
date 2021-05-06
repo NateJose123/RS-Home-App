@@ -1,13 +1,7 @@
 import React, { useContext } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
-import { RestaurantsNavigator } from "./restaurants.navigator";
-import { MapScreen } from "../../features/map/screens/map.screen";
-import { SettingsScreen } from "../../features/settings/screens/settings.screen";
-import { RestaurantsContextProvider } from "../../services/restaurants/restaurants.context";
-import { LocationContextProvider } from "../../services/location/location.context";
-import { FavouritesContextProvider } from "../../services/favourites/favourites.context";
-import { SettingsNavigator } from "./settings.navigator";
+import { HomeScreen } from "../../features/home/screens/home.screen.component";
 const Tab = createBottomTabNavigator();
 
 const TAB_ICON = {
@@ -26,21 +20,13 @@ const createScreenOptions = ({ route }) => {
 };
 
 export const AppNavigator = () => (
-  <FavouritesContextProvider>
-    <LocationContextProvider>
-      <RestaurantsContextProvider>
-        <Tab.Navigator
-          screenOptions={createScreenOptions}
-          tabBarOptions={{
-            activeTintColor: "tomato",
-            inactiveTintColor: "gray",
-          }}
-        >
-          <Tab.Screen name="Restaurants" component={RestaurantsNavigator} />
-          <Tab.Screen name="Map" component={MapScreen} />
-          <Tab.Screen name="Settings" component={SettingsNavigator} />
-        </Tab.Navigator>
-      </RestaurantsContextProvider>
-    </LocationContextProvider>
-  </FavouritesContextProvider>
+  <Tab.Navigator
+    screenOptions={createScreenOptions}
+    tabBarOptions={{
+      activeTintColor: "tomato",
+      inactiveTintColor: "gray",
+    }}
+  >
+    <Tab.Screen name="Home" component={HomeScreen} />
+  </Tab.Navigator>
 );
