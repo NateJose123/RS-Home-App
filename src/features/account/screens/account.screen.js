@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { Avatar } from "react-native-paper";
 import { AuthenticationContext } from "../../../services/authentication/authentication.context";
 import { Spacer } from "../../../components/spacer/spacer.component";
 import {
@@ -6,10 +7,17 @@ import {
   AccountContainer,
   AccountCover,
   AuthButton,
-  Title,
   ProfilePic,
   AuthInput,
+  ForgotPassword,
+  RegisterTextContainer,
+  RegisterText,
+  RegisterTextLink,
+  ProfilePicContainer,
+  LoginButtonText,
+  PromptText,
 } from "../components/account.styles";
+import { TouchableOpacity } from "react-native";
 
 export const AccountScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -20,11 +28,13 @@ export const AccountScreen = ({ navigation }) => {
       <AccountCover />
       <AccountContainer>
         <Spacer>
-          <ProfilePic />
+          <ProfilePicContainer>
+            <Avatar.Icon size={140} backgroundColor="#d8d8d8" />
+          </ProfilePicContainer>
         </Spacer>
         <Spacer size="large">
           <AuthInput
-            label="E-mail"
+            label="Email"
             value={email}
             textContentType="emailAddress"
             keyboardType="email-address"
@@ -35,7 +45,7 @@ export const AccountScreen = ({ navigation }) => {
         </Spacer>
         <Spacer size="medium">
           <AuthInput
-            label="PASSWORD"
+            label="Password"
             value={password}
             textContentType="password"
             secureTextEntry
@@ -45,12 +55,20 @@ export const AccountScreen = ({ navigation }) => {
           />
         </Spacer>
         <Spacer size="large" />
-        <AuthButton
-          mode="contained"
-          onPress={() => navigation.navigate("Login")}
-        >
-          Login
+        <TouchableOpacity>
+          <ForgotPassword>Forgot Password?</ForgotPassword>
+        </TouchableOpacity>
+        <Spacer size="large" />
+        <AuthButton mode="contained" onPress={() => onLogin(email, password)}>
+          <LoginButtonText>Login</LoginButtonText>
         </AuthButton>
+        <Spacer size="large" />
+        <RegisterTextContainer>
+          <RegisterText>Dont' have an account?</RegisterText>
+          <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+            <RegisterTextLink>Sign Up</RegisterTextLink>
+          </TouchableOpacity>
+        </RegisterTextContainer>
       </AccountContainer>
     </AccountBackground>
   );
