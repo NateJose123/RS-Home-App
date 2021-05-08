@@ -13,10 +13,12 @@ export const colors = {
     error: "#D0421B",
     success: "#138000",
     textlink: "#3087e7",
+    border: "#979797",
   },
   bg: {
     primary: "#FFFFFF",
     secondary: "#F1F1F1",
+    inputfield: "#f0f0f0",
   },
   text: {
     primary: "#262626",

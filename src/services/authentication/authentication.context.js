@@ -9,6 +9,7 @@ export const AuthenticationContextProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
+  const [isEmailSent, setIsEmailSent] = useState(false);
 
   firebase.auth().onAuthStateChanged((usr) => {
     if (usr) {
@@ -18,6 +19,12 @@ export const AuthenticationContextProvider = ({ children }) => {
       setIsLoading(false);
     }
   });
+
+  const resetState = () => {
+    setIsLoading(false);
+    setError(null);
+    setIsEmailSent(false);
+  };
 
   const onLogin = (email, password) => {
     setIsLoading(true);
@@ -51,6 +58,23 @@ export const AuthenticationContextProvider = ({ children }) => {
       });
   };
 
+  const onResetPassword = (email) => {
+    setIsLoading(true);
+    firebase
+      .auth()
+      .sendPasswordResetEmail(email)
+      .then(function () {
+        setIsLoading(false);
+        setIsEmailSent(true);
+        return true;
+      })
+      .catch(function (error) {
+        setIsLoading(false);
+        setError(error.toString());
+        console.log(error);
+      });
+  };
+
   const onLogout = () => {
     firebase
       .auth()
@@ -68,9 +92,12 @@ export const AuthenticationContextProvider = ({ children }) => {
         user,
         isLoading,
         error,
+        isEmailSent,
         onLogin,
         onRegister,
         onLogout,
+        onResetPassword,
+        resetState,
       }}
     >
       {children}

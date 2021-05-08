@@ -8,6 +8,7 @@ import {
   AccountContainer,
   AuthButton,
   AuthInput,
+  AuthInputContainer,
   ErrorContainer,
   Title,
 } from "../components/account.styles";
@@ -19,38 +20,58 @@ export const RegisterScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatedPassword, setRepeatedPassword] = useState("");
-  const { onRegister, isLoading, error } = useContext(AuthenticationContext);
+  const { onRegister, isLoading, error, resetState } = useContext(
+    AuthenticationContext
+  );
+
+  const goBack = (navigation) => {
+    resetState();
+    navigation.goBack();
+  };
+
   return (
     <AccountBackground>
       <AccountCover />
       <AccountContainer>
-        <AuthInput
-          label="E-mail"
-          value={email}
-          textContentType="emailAddress"
-          keyboardType="email-address"
-          autoCapitalize="none"
-          onChangeText={(u) => setEmail(u)}
-        />
-        <Spacer size="large">
+        <AuthInputContainer>
           <AuthInput
-            label="Password"
-            value={password}
-            textContentType="password"
-            secureTextEntry
+            textAlign="center"
+            placeholder="E-mail"
+            value={email}
+            textContentType="emailAddress"
+            keyboardType="email-address"
             autoCapitalize="none"
-            onChangeText={(p) => setPassword(p)}
+            mode="outlined"
+            onChangeText={(u) => setEmail(u)}
           />
+        </AuthInputContainer>
+        <Spacer size="large">
+          <AuthInputContainer>
+            <AuthInput
+              textAlign="center"
+              placeholder="Password"
+              value={password}
+              textContentType="password"
+              secureTextEntry
+              autoCapitalize="none"
+              mode="outlined"
+              onChangeText={(p) => setPassword(p)}
+            />
+          </AuthInputContainer>
         </Spacer>
         <Spacer size="large">
-          <AuthInput
-            label="Repeat Password"
-            value={repeatedPassword}
-            textContentType="password"
-            secureTextEntry
-            autoCapitalize="none"
-            onChangeText={(p) => setRepeatedPassword(p)}
-          />
+          <AuthInputContainer>
+            <AuthInput
+              textAlign="center"
+              placeholder="Repeat Password"
+              value={repeatedPassword}
+              textContentType="password"
+              secureTextEntry
+              autoCapitalize="none"
+              mode="outlined"
+              onChangeText={(p) => setRepeatedPassword(p)}
+            />
+          </AuthInputContainer>
         </Spacer>
         {error && (
           <ErrorContainer size="large">
@@ -72,7 +93,7 @@ export const RegisterScreen = ({ navigation }) => {
         </Spacer>
       </AccountContainer>
       <Spacer size="large">
-        <AuthButton mode="contained" onPress={() => navigation.goBack()}>
+        <AuthButton mode="contained" onPress={() => goBack(navigation)}>
           Back
         </AuthButton>
       </Spacer>
