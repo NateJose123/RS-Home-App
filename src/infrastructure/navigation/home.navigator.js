@@ -5,6 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { HomeScreen } from "../../features/home/screens/home.screen";
 import { SettingsNavigator } from "./settings.navigator";
 
+
 const HomeStack = createStackNavigator();
 
 export const HomeNavigator = () => (

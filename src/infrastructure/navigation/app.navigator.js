@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { Ionicons } from "@expo/vector-icons";
 import { HomeNavigator } from "./home.navigator";
 import { MaintenanceNavigator } from "./maintenance.navigator";
+import { ChatNavigator } from "./chat.navigator";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -32,6 +33,7 @@ export const AppNavigator = () => (
     }}
   >
     <Tab.Screen name="Home" component={HomeNavigator} />
+    <Tab.Screen name="Chat" component={ChatNavigator} />
     <Tab.Screen name="Maintenance" component={MaintenanceNavigator} />
   </Tab.Navigator>
 );
