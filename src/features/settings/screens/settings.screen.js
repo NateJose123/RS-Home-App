@@ -1,11 +1,14 @@
-import React, { useContext } from "react";
-import { Button } from "react-native";
+import React, { useContext, useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import { TouchableOpacity } from "react-native";
 import { SafeArea } from "../../../components/utility/safe-area.component";
 import { AuthenticationContext } from "../../../services/authentication/authentication.context";
 import { List, Avatar } from "react-native-paper";
 import styled from "styled-components";
 import { Text } from "../../../components/typography/text.component";
 import { Spacer } from "../../../components/spacer/spacer.component";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { SyncProfileImages } from "../../../services/cloudStorage/images/syncprofile.images";
 
 const SettingsItem = styled(List.Item)`
   padding: ${(props) => props.theme.space[3]};
@@ -16,23 +19,60 @@ const AvatarContainer = styled.View`
 `;
 
 export const SettingsScreen = ({ navigation }) => {
+  const [photo, setPhoto] = useState(null);
+
+  const getProfilePicture = async (currentUser) => {
+    //get uri of local copy of profile picture
+    const localPhotoUri = await AsyncStorage.getItem(
+      `${currentUser.uid}-profilephotoimg`
+    );
+
+    //get timestamp of local picture
+    const localTimestamp = await AsyncStorage.getItem(
+      `${currentUser.uid}-profilephototimestamp`
+    );
+
+    //check whether local profile picture is up to date
+    //with cloud and determine profile picture to
+    //be rendered
+    const photoUri = await SyncProfileImages(
+      `${currentUser.uid}-profilephoto`,
+      localPhotoUri,
+      localTimestamp.toString()
+    );
+    //set profile picture
+    setPhoto(photoUri);
+  };
+
   const { onLogout, user } = useContext(AuthenticationContext);
+
+  //get profile picture on navigating to settings
+  useFocusEffect(() => {
+    getProfilePicture(user);
+  }, [user]);
+
   return (
     <SafeArea>
+      <Spacer size="large" />
       <AvatarContainer>
-        <Avatar.Icon size={180} icon="human" backgroundColor="#2182BD" />
-        <Spacer>
-          <Text variant="caption">{user.email}</Text>
-        </Spacer>
+        <TouchableOpacity onPress={() => navigation.navigate("Camera")}>
+          {!photo && (
+            <Avatar.Icon size={180} icon="human" backgroundColor="black" />
+          )}
+          {photo && (
+            <Avatar.Image
+              size={180}
+              source={{ uri: photo }}
+              backgroundColor="black"
+            />
+          )}
+          <Spacer position="top" size="large">
+            <Text variant="caption">{user.email}</Text>
+          </Spacer>
+        </TouchableOpacity>
       </AvatarContainer>
 
       <List.Section>
-        <SettingsItem
-          title="Favourites"
-          description="View your favourites"
-          left={(props) => <List.Icon {...props} color="black" icon="heart" />}
-          onPress={() => navigation.navigate("favourites")}
-        />
         <SettingsItem
           title="logout"
           left={(props) => <List.Icon {...props} color="black" icon="door" />}

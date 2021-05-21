@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Ionicons } from "@expo/vector-icons";
-import { HomeScreen } from "../../features/home/screens/home.screen.component";
-import { SettingsScreen } from "../../features/settings/screens/settings.screen";
+import { HomeNavigator } from "./home.navigator";
+import { MaintenanceNavigator } from "./maintenance.navigator";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -23,15 +23,6 @@ const createScreenOptions = ({ route }) => {
   };
 };
 
-const Home = () => {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="Main" component={HomeScreen} />
-      <Stack.Screen name="Settings" component={SettingsScreen} />
-    </Stack.Navigator>
-  );
-};
-
 export const AppNavigator = () => (
   <Tab.Navigator
     screenOptions={createScreenOptions}
@@ -40,6 +31,7 @@ export const AppNavigator = () => (
       inactiveTintColor: "gray",
     }}
   >
-    <Tab.Screen name="Home" component={Home} />
+    <Tab.Screen name="Home" component={HomeNavigator} />
+    <Tab.Screen name="Maintenance" component={MaintenanceNavigator} />
   </Tab.Navigator>
 );
