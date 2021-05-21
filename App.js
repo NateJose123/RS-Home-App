@@ -21,11 +21,15 @@ var firebaseConfig = {
   storageBucket: "rs-home-app-e67fa.appspot.com",
   messagingSenderId: "929748852511",
   appId: "1:929748852511:web:974ab30f0d034bee085a2a",
+  databaseURL: "https://rs-home-app-e67fa-default-rtdb.firebaseio.com/",
 };
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
+
+var storage = firebase.storage();
+var database = firebase.database();
 
 export default function App() {
   const [oswaldLoaded] = useOswald({
