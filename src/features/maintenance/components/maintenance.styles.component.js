@@ -1,10 +1,13 @@
+import React from "react";
 import styled from "styled-components/native";
 import {
   Image,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
+  Text,
+  View,
 } from "react-native";
-import { Button, TextInput } from "react-native-paper";
+import { Button, TextInput, ToggleButton } from "react-native-paper";
 
 export const MaintenanceBackground = styled.ImageBackground.attrs({
   source: require("../../../../assets/home-bg.png"),
@@ -78,9 +81,9 @@ border-radius:0px;
 `;
 
 export const ReportTextInputContainer = styled.View`
-  flex: 3;
+  flex: 1;
   width: 80%;
-  margin-bottom: ${(props) => props.theme.space[4]};
+  margin-bottom: ${(props) => props.theme.space[2]};
   margin-top: ${(props) => props.theme.space[2]};
   margin-left: ${(props) => props.theme.space[2]};
   margin-right: ${(props) => props.theme.space[2]};
@@ -99,3 +102,59 @@ export const ReportTextInput = styled(TextInput)`
   font-family: ${(props) => props.theme.fonts.body};
   font-size: ${(props) => props.theme.fontSizes.textEntry};
 `;
+
+export const LocationTextContainer = styled.View`
+  flex: 1;
+  width: 80%;
+  margin-bottom: ${(props) => props.theme.space[2]};
+  margin-left: ${(props) => props.theme.space[2]};
+  margin-right: ${(props) => props.theme.space[2]};
+  align-self: center;
+  border-color: black;
+  border-width: 5px;
+`;
+
+export const LocationTextInput = styled(TextInput)`
+  flex: 1;
+  width: 100%;
+  align-self: center;
+  border-width: 1px;
+  border-radius: 0px;
+  border-color: ${(props) => props.theme.colors.ui.border};
+  font-family: ${(props) => props.theme.fonts.body};
+  font-size: ${(props) => props.theme.fontSizes.textEntry};
+`;
+
+export const PriorityButtonsContainer = styled.View`
+  flex: 1;
+  width: 80%;
+  margin-bottom: ${(props) => props.theme.space[2]};
+  margin-left: ${(props) => props.theme.space[2]};
+  margin-right: ${(props) => props.theme.space[2]};
+  align-self: center;
+  align-items: center;
+  border-color: black;
+  border-width: 5px;
+`;
+
+export const PriorityButton = styled(ToggleButton)`
+  width: 30%;
+`;
+
+export const LowPriority = () => (
+  <View>
+    <Text style={{ color: "blue" }}>Low Priority</Text>
+  </View>
+);
+
+export const MediumPriority = () => (
+  <View>
+    <Text style={{ color: "#ff8000" }}>Medium Priority</Text>
+  </View>
+);
+
+export const HighPriority = () => (
+  <View>
+    <Text style={{ color: "red" }}>High Priority</Text>
+  </View>
+);

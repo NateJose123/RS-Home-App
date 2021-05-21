@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { images } from "../../../../assets/index";
-
+import { View, Text } from "react-native";
 import {
   MaintenanceBackground,
   MaintenanceContainer,
@@ -11,13 +11,19 @@ import {
   ReportTextInputContainer,
   ReportTextInput,
   KeyboardAvoider,
-  KeyboardDismisser,
+  LocationTextContainer,
+  LocationTextInput,
+  PriorityButtonsContainer,
+  PriorityButton,
+  LowPriority,
+  MediumPriority,
+  HighPriority,
 } from "../components/maintenance.styles.component";
 import { colors } from "../../../infrastructure/theme/colors";
-import { Keyboard } from "react-native";
 
 export const ReportingScreen = ({ navigation }) => {
   const [maintenanceImage, setMaintenanceImage] = useState();
+  const [priority, setPriority] = useState("low");
 
   //logic for handling camera will go here
 
@@ -51,6 +57,19 @@ export const ReportingScreen = ({ navigation }) => {
           <ReportTextInputContainer>
             <ReportTextInput multiline={true} />
           </ReportTextInputContainer>
+          <LocationTextContainer>
+            <LocationTextInput />
+          </LocationTextContainer>
+          <PriorityButtonsContainer>
+            <PriorityButton.Row
+              onValueChange={(value) => setPriority(value)}
+              value={priority}
+            >
+              <PriorityButton icon={LowPriority} value="left" />
+              <PriorityButton icon={MediumPriority} value="right" />
+              <PriorityButton icon={HighPriority} value="right" />
+            </PriorityButton.Row>
+          </PriorityButtonsContainer>
         </MaintenanceContainer>
       </MaintenanceBackground>
     </KeyboardAvoider>
