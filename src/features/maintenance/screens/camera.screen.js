@@ -28,23 +28,17 @@ export const CameraScreen = ({ navigation }) => {
     if (cameraRef) {
       const photo = await cameraRef.current.takePictureAsync();
       const timestamp = Date.now();
-      const name = `${user.uid}-${timestamp}-maintenancephoto`;
+      const name = `${user.uid}-maintenancephoto`;
       const compressedPhoto = await ImageCompressor(
         photo.uri,
         photo.width,
-        photo.height
+        photo.height,
+        "feed"
       );
-      console.log("compressed photo", compressedPhoto);
       //Async storage stores two things: the image uri and its timestamp
       AsyncStorage.setItem(`${name}img`, compressedPhoto.uri);
       AsyncStorage.setItem(`${name}timestamp`, timestamp.toString());
-      //Uploads to cloud after saving locally
-      UploadImages(
-        compressedPhoto.uri,
-        name,
-        "MaintenanceImages", //cloud folder name
-        timestamp
-      ).then(navigation.goBack());
+      navigation.goBack();
     }
   };
 

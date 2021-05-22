@@ -32,7 +32,8 @@ export const CameraScreen = ({ navigation }) => {
       const compressedPhoto = await ImageCompressor(
         photo.uri,
         photo.width,
-        photo.height
+        photo.height,
+        "profile"
       );
       console.log("compressed photo", compressedPhoto);
       //Async storage stores two things: the image uri and its timestamp
