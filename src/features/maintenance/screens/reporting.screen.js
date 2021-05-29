@@ -50,11 +50,17 @@ export const ReportingScreen = ({ navigation }) => {
       `${currentUser.uid}-maintenancephoto${timestamp}`,
       "MaintenancePics",
       timestamp
-    ).then(async () => {
-      const maintenanceImgUrl = await AsyncStorage.getItem(`maintenanceimg`);
-      const userInfo = requestUserDetails();
-      PostKaizen(maintenanceImgUrl, kaizen, location, priority, userInfo).then(
-        async () => {
+    )
+      .then(async () => {
+        const maintenanceImgUrl = await AsyncStorage.getItem(`maintenanceimg`);
+        const userInfo = requestUserDetails();
+        PostKaizen(
+          maintenanceImgUrl,
+          kaizen,
+          location,
+          priority,
+          userInfo
+        ).then(async () => {
           try {
             await AsyncStorage.removeItem(
               `${currentUser.uid}-maintenancephotoimg`
@@ -63,9 +69,9 @@ export const ReportingScreen = ({ navigation }) => {
           } catch (e) {
             console.log(e);
           }
-        }
-      );
-    });
+        });
+      })
+      .then(navigation.goBack());
   };
 
   const { requestUserDetails, user } = useContext(AuthenticationContext);

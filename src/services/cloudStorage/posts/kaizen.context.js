@@ -4,7 +4,7 @@ import * as firebase from "firebase";
 export const KaizenContext = createContext();
 
 export const KaizenContextProvider = ({ children }) => {
-  const [kaizens, setKaizens] = useState();
+  const [kaizens, setKaizens] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -13,11 +13,19 @@ export const KaizenContextProvider = ({ children }) => {
     setTimeout(() => {
       var KaizenRef = firebase.database().ref("maintenancePosts/");
       KaizenRef.on("value", (snapshot) => {
-        setKaizens(snapshot.val());
+        const newKaizenData = snapshot.val();
+        const kaizenData = [];
+        Object.values(newKaizenData).map((value) => {
+          kaizenData.push(value);
+        });
+        setKaizens(kaizenData);
       });
     }, 2000);
-    console.log(kaizens);
   };
+
+  useEffect(() => {
+    retrieveKaizens();
+  }, []);
 
   return (
     <KaizenContext.Provider

@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { TouchableOpacity } from "react-native";
 import {
   MaintenanceBackground,
   MaintenanceFeedContainer,
@@ -19,6 +20,10 @@ export const FeedScreen = ({ navigation }) => {
     KaizenContext
   );
 
+  useFocusEffect(() => {
+    retrieveKaizens();
+  }, []);
+
   return (
     <MaintenanceBackground>
       <MaintenanceContainer>
@@ -28,13 +33,11 @@ export const FeedScreen = ({ navigation }) => {
             data={kaizens}
             renderItem={({ item }) => {
               return (
-                <TouchableOpacity onPress={() => null}>
-                  <FadeInView>
-                    <Spacer position="bottom" size="large">
-                      <MaintenanceInfoCard kaizenData={item} />
-                    </Spacer>
-                  </FadeInView>
-                </TouchableOpacity>
+                <FadeInView>
+                  <Spacer position="bottom" size="large">
+                    <MaintenanceInfoCard key={item["id"]} kaizenData={item} />
+                  </Spacer>
+                </FadeInView>
               );
             }}
           ></MaintenanceList>

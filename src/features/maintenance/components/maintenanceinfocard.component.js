@@ -9,21 +9,20 @@ const MaintenanceCard = styled(Card)`
 export const MaintenanceInfoCard = ({ kaizenData = {} }) => {
   const {
     author = "Somebody",
-    photoUrl = "",
+    photoUrl = "https://picsum.photos/700",
     kaizen = "Here's a kaizen for you",
-    loc = "",
-    priority = "",
-    status = "",
-    uid = "",
+    loc = "Somewhere",
+    priority = "Medium",
+    status = "Incomplete",
+    uid = "12345",
   } = kaizenData;
-  console.log(kaizenData);
   return (
     <MaintenanceCard>
+      <MaintenanceCard.Cover source={{ uri: photoUrl }} />
       <MaintenanceCard.Content>
         <Title>{loc}</Title>
         <Paragraph>{kaizen}</Paragraph>
       </MaintenanceCard.Content>
-      <MaintenanceCard.Cover source={{ uri: "https://picsum.photos/700" }} />
       <MaintenanceCard.Actions>
         <Button>Cancel</Button>
         <Button>Ok</Button>

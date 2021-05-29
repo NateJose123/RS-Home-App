@@ -24,24 +24,21 @@ export const KeyboardDismisser = styled(TouchableWithoutFeedback)``;
 export const MaintenanceContainer = styled.View`
   flex: 1
   flex-wrap: wrap;
-  border-color: blue;
-  border-width: 5px;
   align-content: center;
 `;
 
 export const ReportButtonContainer = styled.View`
   flex: 1;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
-  border-color: green;
-  border-width: 5px;
+  margin-bottom: ${(props) => props.theme.space[2]};
+  margin-top: ${(props) => props.theme.space[2]};
 `;
 
 export const MaintenanceFeedContainer = styled.View`
   flex:6
   width: 100%
-  border-color: black;
-  border-width: 5px;
+
   margin-top: ${(props) => props.theme.space[4]};
 `;
 

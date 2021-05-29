@@ -6,7 +6,7 @@ import { IconButton } from "react-native-paper";
 const SettingsIconContainer = styled.View`
   flex: 1;
   justify-content: center;
-  margin-top: 30px;
+  margin-top: ${(props) => props.theme.space[4]};
   width: 100%;
   align-items: center;
 `;
