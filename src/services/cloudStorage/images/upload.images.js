@@ -1,4 +1,5 @@
 import * as firebase from "firebase";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const UploadImages = async (uri, name, location, timestamp) => {
   const response = await fetch(uri);
@@ -37,7 +38,14 @@ export const UploadImages = async (uri, name, location, timestamp) => {
         () => {
           task.snapshot.ref.getDownloadURL().then((downloadURL) => {
             console.log("Successfully uploaded picture!");
-            updateUserProfilePic(downloadURL);
+            console.log(location);
+            if (location === "ProfilePics") {
+              updateUserProfilePic(downloadURL);
+            } else if (location === "MaintenancePics") {
+              console.log("saving maintenance img locally");
+              //storing download url locally so that it can be uploaded to the database as needed
+              AsyncStorage.setItem(`maintenanceimg`, downloadURL);
+            }
           });
         }
       )

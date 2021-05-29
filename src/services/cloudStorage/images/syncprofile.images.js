@@ -13,19 +13,24 @@ export const SyncProfileImages = async (
     .storage()
     .ref()
     .child("ProfilePics/" + imageId);
-
   //Finding timestamp metadata to compare with
   //local timestamp to see what uri has to
   //be returned
+  console.log(imageId);
   return (
     ImageRef.getMetadata()
       .then(async (metadata) => {
         //accessing timestamp on cloud
         const cloudStamp = metadata["customMetadata"]["timeStamp"];
-
         //if timestamps match, files are identical
         //so local file can be used to save data
-        if (localPhotoTimestamp === cloudStamp) {
+        if (localPhotoUri === null) {
+          newUri = await ImageRef.getDownloadURL().then((url) => url);
+          AsyncStorage.setItem(`${imageId}img`, newUri);
+          AsyncStorage.setItem(`${imageId}timestamp`, cloudStamp.toString());
+          const newlocalPhotoUri = await AsyncStorage.getItem(`${imageId}img`);
+          return newlocalPhotoUri;
+        } else if (localPhotoTimestamp === cloudStamp) {
           return localPhotoUri;
         }
         //if local photo is newer, upload it to cloud
@@ -47,6 +52,8 @@ export const SyncProfileImages = async (
         }
       })
       //find any errors
-      .catch((error) => {})
+      .catch((error) => {
+        console.log(error);
+      })
   );
 };

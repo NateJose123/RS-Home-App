@@ -32,13 +32,15 @@ export const SettingsScreen = ({ navigation }) => {
       `${currentUser.uid}-profilephototimestamp`
     );
 
+    localTimestamp ? localTimestamp.toString() : null;
+
     //check whether local profile picture is up to date
     //with cloud and determine profile picture to
     //be rendered
     const photoUri = await SyncProfileImages(
       `${currentUser.uid}-profilephoto`,
       localPhotoUri,
-      localTimestamp.toString()
+      localTimestamp
     );
     //set profile picture
     setPhoto(photoUri);

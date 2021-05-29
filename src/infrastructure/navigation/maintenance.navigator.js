@@ -6,6 +6,7 @@ import { FeedScreen } from "../../features/maintenance/screens/feed.screen";
 import { SettingsNavigator } from "./settings.navigator";
 import { ReportingScreen } from "../../features/maintenance/screens/reporting.screen";
 import { CameraScreen } from "../../features/maintenance/screens/camera.screen";
+import { KaizenContextProvider } from "../../services/cloudStorage/posts/kaizen.context";
 
 const MaintenanceStack = createStackNavigator();
 
@@ -30,14 +31,20 @@ export const verticalAnimation = {
 
 export const MaintenanceNavigator = () => {
   return (
-    <MaintenanceStack.Navigator headerMode="none">
-      <MaintenanceStack.Screen name="Feed" component={FeedScreen} />
-      <MaintenanceStack.Screen
-        name="Reporting"
-        component={ReportingScreen}
-        options={verticalAnimation}
-      />
-      <MaintenanceStack.Screen name="Camera" component={CameraScreen} />
-    </MaintenanceStack.Navigator>
+    <KaizenContextProvider>
+      <MaintenanceStack.Navigator headerMode="none">
+        <MaintenanceStack.Screen name="Feed" component={FeedScreen} />
+        <MaintenanceStack.Screen
+          name="Reporting"
+          component={ReportingScreen}
+          options={verticalAnimation}
+        />
+        <MaintenanceStack.Screen name="Camera" component={CameraScreen} />
+        <MaintenanceStack.Screen
+          name="Settings"
+          component={SettingsNavigator}
+        />
+      </MaintenanceStack.Navigator>
+    </KaizenContextProvider>
   );
 };

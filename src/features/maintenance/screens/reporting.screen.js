@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { AuthenticationContext } from "../../../services/authentication/authentication.context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { UploadImages } from "../../../services/cloudStorage/images/upload.images";
 import { PostKaizen } from "../../../services/cloudStorage/posts/kaizen.post";
 import { images } from "../../../../assets/index";
 import { View, Text } from "react-native";
@@ -42,7 +43,32 @@ export const ReportingScreen = ({ navigation }) => {
     setMaintenanceImage(localMaintenanceUri);
   };
 
-  const { onLogout, user } = useContext(AuthenticationContext);
+  const UploadKaizen = async (currentUser) => {
+    const timestamp = Date.now().toString();
+    UploadImages(
+      maintenanceImage,
+      `${currentUser.uid}-maintenancephoto${timestamp}`,
+      "MaintenancePics",
+      timestamp
+    ).then(async () => {
+      const maintenanceImgUrl = await AsyncStorage.getItem(`maintenanceimg`);
+      const userInfo = requestUserDetails();
+      PostKaizen(maintenanceImgUrl, kaizen, location, priority, userInfo).then(
+        async () => {
+          try {
+            await AsyncStorage.removeItem(
+              `${currentUser.uid}-maintenancephotoimg`
+            );
+            await AsyncStorage.removeItem(`${currentUser.uid}-maintenanceimg`);
+          } catch (e) {
+            console.log(e);
+          }
+        }
+      );
+    });
+  };
+
+  const { requestUserDetails, user } = useContext(AuthenticationContext);
 
   useFocusEffect(() => {
     getMaintenancePicture(user);
@@ -105,9 +131,7 @@ export const ReportingScreen = ({ navigation }) => {
         <KaizenButtonsContainer>
           <KaizenButton
             mode="contained"
-            onPress={() =>
-              PostKaizen(maintenanceImage, kaizen, location, priority)
-            }
+            onPress={() => UploadKaizen(user)}
             color={colors.ui.primary}
           >
             Kaizen

@@ -4,10 +4,11 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { IconButton } from "react-native-paper";
 
 const SettingsIconContainer = styled.View`
-  margin-top: 10px;
+  flex: 1;
+  justify-content: center;
+  margin-top: 30px;
   width: 100%;
-  height: 10%;
-  align-items: flex-end;
+  align-items: center;
 `;
 
 const SettingsButtonIcon = styled(IconButton)``;

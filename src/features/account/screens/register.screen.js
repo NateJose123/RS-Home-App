@@ -17,6 +17,7 @@ import { Spacer } from "../../../components/spacer/spacer.component";
 import { AuthenticationContext } from "../../../services/authentication/authentication.context";
 
 export const RegisterScreen = ({ navigation }) => {
+  const [userName, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatedPassword, setRepeatedPassword] = useState("");
@@ -33,6 +34,17 @@ export const RegisterScreen = ({ navigation }) => {
     <AccountBackground>
       <AccountCover />
       <AccountContainer>
+        <AuthInputContainer>
+          <AuthInput
+            textAlign="center"
+            placeholder="Name"
+            value={userName}
+            autoCapitalize="none"
+            mode="outlined"
+            onChangeText={(u) => setUsername(u)}
+          />
+        </AuthInputContainer>
+        <Spacer size="large"></Spacer>
         <AuthInputContainer>
           <AuthInput
             textAlign="center"
@@ -83,7 +95,9 @@ export const RegisterScreen = ({ navigation }) => {
             <AuthButton
               icon="email"
               mode="contained"
-              onPress={() => onRegister(email, password, repeatedPassword)}
+              onPress={() =>
+                onRegister(email, password, repeatedPassword, userName)
+              }
             >
               Register
             </AuthButton>

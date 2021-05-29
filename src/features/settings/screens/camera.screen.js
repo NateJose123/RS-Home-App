@@ -33,7 +33,7 @@ export const CameraScreen = ({ navigation }) => {
         photo.uri,
         photo.width,
         photo.height,
-        "profile"
+        "profile" //tag so that the compressor knows how much to compress
       );
       console.log("compressed photo", compressedPhoto);
       //Async storage stores two things: the image uri and its timestamp
