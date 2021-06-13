@@ -38,7 +38,13 @@ export const CameraScreen = ({ navigation }) => {
       //Async storage stores two things: the image uri and its timestamp
       AsyncStorage.setItem(`${name}img`, compressedPhoto.uri);
       AsyncStorage.setItem(`${name}timestamp`, timestamp.toString());
-      navigation.goBack();
+      //Uploads to cloud after saving locally
+      UploadImages(
+        compressedPhoto.uri,
+        name,
+        "MaintenancePics",
+        timestamp
+      ).then(navigation.goBack());
     }
   };
 

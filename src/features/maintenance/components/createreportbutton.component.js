@@ -5,7 +5,7 @@ import { TouchableOpacity } from "react-native";
 import { colors } from "../../../infrastructure/theme/colors";
 
 const ReportButton = styled(Button)`
-  flex: 0.9;
+  flex: 0.7;
   width: 100%;
   justify-content: center;
 `;

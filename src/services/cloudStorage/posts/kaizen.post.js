@@ -18,7 +18,7 @@ export const PostKaizen = (
     kaizen: kaizenText,
     loc: location,
     priority: priority,
-    status: "incomplete",
+    status: "In-Progress",
     id: newPostKey,
   };
 

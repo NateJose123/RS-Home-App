@@ -7,6 +7,7 @@ import { SettingsNavigator } from "./settings.navigator";
 import { ReportingScreen } from "../../features/maintenance/screens/reporting.screen";
 import { CameraScreen } from "../../features/maintenance/screens/camera.screen";
 import { KaizenContextProvider } from "../../services/cloudStorage/posts/kaizen.context";
+import { MaintenanceDetailScreen } from "../../features/maintenance/screens/maintenancedetail.screen";
 
 const MaintenanceStack = createStackNavigator();
 
@@ -43,6 +44,10 @@ export const MaintenanceNavigator = () => {
         <MaintenanceStack.Screen
           name="Settings"
           component={SettingsNavigator}
+        />
+        <MaintenanceStack.Screen
+          name="MaintenanceDetail"
+          component={MaintenanceDetailScreen}
         />
       </MaintenanceStack.Navigator>
     </KaizenContextProvider>

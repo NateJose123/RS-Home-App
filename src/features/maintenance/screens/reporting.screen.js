@@ -34,7 +34,7 @@ export const ReportingScreen = ({ navigation }) => {
   const [maintenanceImage, setMaintenanceImage] = useState();
   const [kaizen, setKaizen] = useState("");
   const [location, setLocation] = useState("");
-  const [priority, setPriority] = useState("low");
+  const [priority, setPriority] = useState("Low");
 
   const getMaintenancePicture = async (currentUser) => {
     const localMaintenanceUri = await AsyncStorage.getItem(
@@ -65,7 +65,7 @@ export const ReportingScreen = ({ navigation }) => {
             await AsyncStorage.removeItem(
               `${currentUser.uid}-maintenancephotoimg`
             );
-            await AsyncStorage.removeItem(`${currentUser.uid}-maintenanceimg`);
+            await AsyncStorage.removeItem(`maintenanceimg`);
           } catch (e) {
             console.log(e);
           }
@@ -129,9 +129,9 @@ export const ReportingScreen = ({ navigation }) => {
             onValueChange={(value) => setPriority(value)}
             value={priority}
           >
-            <PriorityButton icon={LowPriority} value="low" />
-            <PriorityButton icon={MediumPriority} value="medium" />
-            <PriorityButton icon={HighPriority} value="high" />
+            <PriorityButton icon={LowPriority} value="Low" />
+            <PriorityButton icon={MediumPriority} value="Medium" />
+            <PriorityButton icon={HighPriority} value="High" />
           </PriorityButton.Row>
         </PriorityButtonsContainer>
         <KaizenButtonsContainer>

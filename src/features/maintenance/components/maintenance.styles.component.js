@@ -29,8 +29,9 @@ export const MaintenanceContainer = styled.View`
 
 export const ReportButtonContainer = styled.View`
   flex: 1;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   margin-bottom: ${(props) => props.theme.space[2]};
   margin-top: ${(props) => props.theme.space[2]};
 `;

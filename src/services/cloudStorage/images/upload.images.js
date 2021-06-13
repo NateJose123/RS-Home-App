@@ -36,7 +36,7 @@ export const UploadImages = async (uri, name, location, timestamp) => {
         (error) =>
           reject(error) /* this is where you would put an error callback! */,
         () => {
-          task.snapshot.ref.getDownloadURL().then((downloadURL) => {
+          task.snapshot.ref.getDownloadURL().then(async (downloadURL) => {
             console.log("Successfully uploaded picture!");
             console.log(location);
             if (location === "ProfilePics") {
@@ -44,7 +44,7 @@ export const UploadImages = async (uri, name, location, timestamp) => {
             } else if (location === "MaintenancePics") {
               console.log("saving maintenance img locally");
               //storing download url locally so that it can be uploaded to the database as needed
-              AsyncStorage.setItem(`maintenanceimg`, downloadURL);
+              await AsyncStorage.setItem(`maintenanceimg`, downloadURL);
             }
           });
         }

@@ -1,5 +1,6 @@
 import React, { useState, useContext, createContext, useEffect } from "react";
 import * as firebase from "firebase";
+import { unstable_batchedUpdates } from "react-native";
 
 export const KaizenContext = createContext();
 
@@ -7,6 +8,14 @@ export const KaizenContextProvider = ({ children }) => {
   const [kaizens, setKaizens] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [currentKaizen, setCurrentKaizen] = useState();
+
+  const updateKaizens = (postId, updatedData) => {
+    var updates = {};
+    updates["maintenancePosts/" + postId] = updatedData;
+    console.log(updatedData);
+    firebase.database().ref().update(updates);
+  };
 
   const retrieveKaizens = () => {
     setIsLoading(true);
@@ -16,11 +25,14 @@ export const KaizenContextProvider = ({ children }) => {
         const newKaizenData = snapshot.val();
         const kaizenData = [];
         Object.values(newKaizenData).map((value) => {
-          kaizenData.push(value);
+          if (value.status === "In-Progress") {
+            kaizenData.push(value);
+          }
         });
         setKaizens(kaizenData);
       });
     }, 2000);
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -34,6 +46,9 @@ export const KaizenContextProvider = ({ children }) => {
         isLoading,
         error,
         retrieveKaizens,
+        updateKaizens,
+        currentKaizen,
+        setCurrentKaizen,
       }}
     >
       {children}
